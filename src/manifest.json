@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
-  "name": "feature flags",
-  "version": "2.4",
+  "name": "feature flipping",
+  "version": "1.0",
 
-  "description": "enable / disable feature flags",
+  "description": "enable / disable features",
   "icons": {
     "16": "img/icon16.png",
     "48": "img/icon48.png",
