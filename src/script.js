@@ -56,6 +56,11 @@ const reset = async () => {
   return response
 }
 
+const env =  async () => {
+  const response = await executeScript({action: 'env', payload: {}})
+  console.log('env', {response})
+  return response
+}
 
 const render = (payload) => {
   const inner = document.createElement('div')
@@ -66,7 +71,8 @@ const render = (payload) => {
     feature.id = featKey
     Object.keys(payload[featKey]).forEach(envKey => {
       const environment = document.createElement('div')
-      environment.className = `environment ${payload[featKey][envKey] ? 'active' : ''}`
+      environment.className =
+        `environment ${payload[featKey][envKey] ? 'active' : ''} ${envKey === envName ? '' : 'disabled'}`
       environment.id = `${featKey}_${envKey}`
       environment.innerText = featKey // `${featKey}: ${envKey}`
       environment.addEventListener('click', () => {
@@ -97,11 +103,19 @@ const append = (payload) => {
     reset().then(append)
   })
   resetBtn.innerText = 'reset flipping'
-  const p = document.createElement('p')
-  p.innerHTML = JSON.stringify(payload)
+
+  const debug = document.createElement('p')
+  debug.className = 'debug'
+  debug.innerHTML = `<code><div>env:${envName}</div>${JSON.stringify(payload)}</code>`
+
   app.append(render(payload))
   app.append(resetBtn)
-  app.append(p)
+  app.append(debug)
 }
 
-read().then(append)
+let envName = null;
+
+env().then(response => {
+  envName = response
+  read().then(append)
+})
