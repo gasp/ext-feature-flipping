@@ -3,10 +3,16 @@ body {
   height: 200px;
   width: 300px;
   font-family: Helvetica, Ubuntu, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
+  margin: .2em;
   font-size: 2em;
+}
+p {
+  margin: .3em;
 }
 
 .environment {
@@ -32,8 +38,6 @@ h1 {
 .environment.active:hover {
   background-color: #4f9cee;
 }
-
-
 
 .environment.disabled {
   display: none;

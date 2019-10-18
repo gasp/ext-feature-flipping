@@ -11,6 +11,10 @@ var result; // keep var here for compat
     case 'write':
       localStorage.setItem('flipping', JSON.stringify(payload));
       break;
+    case 'delete':
+      localStorage.removeItem('flipping');
+      result = {};
+      break;
     default:
       console.log(`no action given in ${action}`)
   }

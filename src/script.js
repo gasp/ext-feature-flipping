@@ -50,6 +50,12 @@ const flip = async ({feature, environment}) => {
   append(nextState)
 }
 
+const reset = async () => {
+  const response = await executeScript({action: 'delete', payload: {}})
+  console.log('delete', {response})
+  return response
+}
+
 
 const render = (payload) => {
   const inner = document.createElement('div')
@@ -80,9 +86,21 @@ const append = (payload) => {
   while (app.firstChild) {
     app.removeChild(app.firstChild)
   }
+  if (!Object.keys(payload).length) {
+    const empty = document.createElement('p')
+    empty.innerText = 'no flipping preference is set to this website, try displaying a page flipped feature and open this popup again'
+    app.append(empty)
+  }
+
+  const resetBtn = document.createElement('button')
+  resetBtn.addEventListener('click', () => {
+    reset().then(append)
+  })
+  resetBtn.innerText = 'reset flipping'
   const p = document.createElement('p')
   p.innerHTML = JSON.stringify(payload)
   app.append(render(payload))
+  app.append(resetBtn)
   app.append(p)
 }
 
